@@ -20,7 +20,7 @@ class CreateUsersTable extends Migration
             $table->string('password');//用户密码
             $table->string('avatar');//用户头像
             $table->string('confirmation_token');//用户邮箱确认token
-            $table->smallInteger('is_active');//用户是否已激活邮箱
+            $table->smallInteger('is_active')->default(0);//用户是否已激活邮箱
             $table->integer('questions_count')->default(0);//用户发起问题数
             $table->integer('answers_count')->default(0);//用户问题答案数
             $table->integer('comments_count')->default(0);//用户评论问题数
