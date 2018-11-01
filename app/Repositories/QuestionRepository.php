@@ -25,6 +25,11 @@ class QuestionRepository
     }
 
 
+    /**
+     * 若关键词数据库中没有，则加入数据库，并获得其id
+     * @param array $topics
+     * @return array
+     */
     public function normalizeTopic(array $topics)
     {
         return collect($topics)->map(function ($topic){
@@ -33,7 +38,7 @@ class QuestionRepository
                return (int)$topic;
            }
            $newTopic = Topic::create(['name'=>$topic,'questions_count'=>1]);
-           return $newTopic;
+           return $newTopic->id;
         })->toArray();
     }
 }

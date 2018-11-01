@@ -20,6 +20,7 @@
                                 @endif
                             </div>
                             <div class="form-group">
+                                <label for="topics">话题</label>
                                 <select name="topics[]" class="js-example-placeholder-multiple js-data-example-ajax form-control" multiple="multiple">
                                 </select>
                             </div>
