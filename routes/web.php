@@ -25,4 +25,5 @@ Route::resource('questions','QuestionsController',['names'=>[
     'create' => 'question.create',
     'show'   => 'question.show'
 ]]);
+Route::post('questions/{id}/answer','AnswersController@store');
 

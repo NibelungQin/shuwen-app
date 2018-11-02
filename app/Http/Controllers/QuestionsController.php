@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreQuestionRequest;
+use App\Model\Question;
 use App\Repositories\QuestionRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -11,6 +12,10 @@ class QuestionsController extends Controller
 {
     protected $questionRepository;
 
+    /**
+     * QuestionsController constructor.
+     * @param QuestionRepository $questionRepository
+     */
     public function __construct(QuestionRepository $questionRepository)
     {
         $this->middleware('auth')->except(['index','show']);
@@ -64,7 +69,8 @@ class QuestionsController extends Controller
      */
     public function show($id)
     {
-        //
+        $question = $this->questionRepository->byIdWithTopicsAndAnswers($id);
+        return view('questions.show',compact('question'));
     }
 
     /**
@@ -75,7 +81,13 @@ class QuestionsController extends Controller
      */
     public function edit($id)
     {
-        //
+        $question = $this->questionRepository->byId($id);
+
+        if (Auth::user()->owns($question)){
+            return view('questions.edit',compact('question'));
+        }
+
+        return back();
     }
 
     /**
@@ -85,9 +97,21 @@ class QuestionsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(StoreQuestionRequest $request, $id)
     {
-        //
+        $question = $this->questionRepository->byId($id);
+        $topics = $this->questionRepository->normalizeTopic($request->get('topics'));
+
+        $data = [
+            'title' => $request->get('title'),
+            'body'  => $request->get('body'),
+        ];
+        $question->update($data);
+
+        $question->topics()->sync($topics);
+
+        return redirect()->route('question.show',['id'=>$question->id]);
+
     }
 
     /**
@@ -98,6 +122,13 @@ class QuestionsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $question = $this->questionRepository->byId($id);
+
+        if (Auth::user()->owns($question)){
+            $question->delect();
+            return redirect('/');
+        }
+
+        abort('403','Forbidden');
     }
 }

@@ -24,7 +24,6 @@ class QuestionRepository
         return Question::create($data);
     }
 
-
     /**
      * 若关键词数据库中没有，则加入数据库，并获得其id
      * @param array $topics
@@ -40,5 +39,20 @@ class QuestionRepository
            $newTopic = Topic::create(['name'=>$topic,'questions_count'=>1]);
            return $newTopic->id;
         })->toArray();
+    }
+
+    /**
+     * 根据id返回问题及其关联的话题与回答
+     * @param integer $id
+     * @return mixed
+     */
+    public function byIdWithTopicsAndAnswers($id)
+    {
+        return Question::where('id',$id)->with(['topics'])->first();
+    }
+
+    public function byId($id)
+    {
+        return Question::find($id);
     }
 }
