@@ -55,4 +55,10 @@ class QuestionRepository
     {
         return Question::find($id);
     }
+
+    public function getQuestionCommentsById($id)
+    {
+        $question = Question::with('comments','comments.user')->where(['id'=>$id])->first();
+        return $question->comments;
+    }
 }

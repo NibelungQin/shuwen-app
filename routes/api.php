@@ -18,3 +18,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::get('/topics','TopicsController@index')->middleware('api');
+Route::post('/question/follower','QuestionFollowController@follower')->middleware('auth:api');
+Route::post('/question/follow','QuestionFollowController@followThisQuestion')->middleware('auth:api');
+Route::get('/question/{id}/comments','CommentsController@question');
+//Route::get('/question/{id}/comments','CommentsController@question');
+Route::post('comment','CommentsController@store');

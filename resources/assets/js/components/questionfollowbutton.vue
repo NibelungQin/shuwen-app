@@ -1,6 +1,9 @@
 <template>
     <button
         class="btn btn-default"
+        v-bind:class="{'btn-success' : followed}"
+        v-text="text"
+        v-on:click="follow"
     ></button>
 </template>
 
@@ -8,7 +11,7 @@
     export default {
         props:['question'],
         mounted() {
-            this.$http.post('/api/question/follower',{'question':this.question}).then(response => {
+            axios.post('/api/question/follower',{'question':this.question}).then(response => {
                 this.followed = response.data.followed
             })
         },
@@ -24,7 +27,7 @@
         },
         methods:{
             follow() {
-                this.$http.post('/api/question/follow',{'question':this.question}).then(response => {
+                axios.post('/api/question/follow',{'question':this.question}).then(response => {
                     this.followed = response.data.followed
                 })
             }
