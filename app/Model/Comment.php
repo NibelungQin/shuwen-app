@@ -20,7 +20,10 @@ class Comment extends Model
         return $this->morphTo();
     }
 
-    public function users()
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function user()
     {
         return $this->belongsTo(User::class);
     }

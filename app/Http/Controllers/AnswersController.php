@@ -33,9 +33,8 @@ class AnswersController extends Controller
             'body'        => $request->get('body'),
         ];
         $answer = $this->answerRepository->create($data);
-//        $answer->questions()->increment('answers_count');
-        dd($answer);
-//        return back();
+        $answer->questions()->increment('answers_count');
+        return back();
     }
 
 }

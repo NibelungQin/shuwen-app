@@ -125,7 +125,7 @@ class QuestionsController extends Controller
         $question = $this->questionRepository->byId($id);
 
         if (Auth::user()->owns($question)){
-            $question->delect();
+            $question->delete();
             return redirect('/');
         }
 

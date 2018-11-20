@@ -20,7 +20,7 @@
                             <form action="/questions/{{$question->id}}" method="POST" class="delete-form">
                                 {{method_field('DELETE')}}
                                 {{csrf_field()}}
-                                <button class="button is-naked delete-button">删除</button>
+                                <button class="button is-naked delete-button">删除　</button>
                             </form>
                         @endif
                             <comments type="question"

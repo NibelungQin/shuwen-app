@@ -13,6 +13,14 @@
 
     <!-- Styles -->
     <link href="{{ mix('css/app.css') }}" rel="stylesheet">
+    <script>
+        @if(Auth::check())
+            window.Shuwen = {
+                name:"{{Auth::user()->name}}",
+                avatar:"{{Auth::user()->avatar}}"
+            };
+        @endif
+    </script>
 </head>
 <body>
     <div id="app">

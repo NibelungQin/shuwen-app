@@ -22,4 +22,4 @@ Route::post('/question/follower','QuestionFollowController@follower')->middlewar
 Route::post('/question/follow','QuestionFollowController@followThisQuestion')->middleware('auth:api');
 Route::get('/question/{id}/comments','CommentsController@question');
 //Route::get('/question/{id}/comments','CommentsController@question');
-Route::post('comment','CommentsController@store');
+Route::post('/comment','CommentsController@store');

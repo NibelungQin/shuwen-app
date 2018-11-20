@@ -27,4 +27,9 @@ class AnswerRepository
     {
         return Answer::find($id);
     }
+
+    public function getAnswerCommentsById($id)
+    {
+        return Answer::with('comments','comments.user')->where('id',$id)->first();
+    }
 }
