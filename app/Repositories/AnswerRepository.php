@@ -30,6 +30,7 @@ class AnswerRepository
 
     public function getAnswerCommentsById($id)
     {
-        return Answer::with('comments','comments.user')->where('id',$id)->first();
+        $answer = Answer::with('comments','comments.user')->where('id',$id)->first();
+        return $answer->comments;
     }
 }

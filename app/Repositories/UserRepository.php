@@ -21,4 +21,13 @@ class UserRepository
         $user = User::where('confirmation_token',$token)->first();
         return $user;
     }
+
+    /**
+     * @param $id
+     * @return mixed
+     */
+    public function byId($id)
+    {
+        return User::find($id);
+    }
 }

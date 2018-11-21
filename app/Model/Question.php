@@ -49,4 +49,9 @@ class Question extends Model
     {
         return $this->morphMany('App\Model\Comment','commentable');
     }
+
+    public function scopePublished($query)
+    {
+        return $query->where('is_hidden','F');
+    }
 }

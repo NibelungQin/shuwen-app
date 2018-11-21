@@ -51,11 +51,30 @@ class QuestionRepository
         return Question::where('id',$id)->with(['topics'])->first();
     }
 
+    /**
+     * 通过id查询问题
+     * @param $id
+     * @return mixed
+     */
     public function byId($id)
     {
         return Question::find($id);
     }
 
+    /**
+     * 获得问题列表和相关连的问题用户
+     * @return mixed
+     */
+    public function getQuestionsFeed()
+    {
+        return Question::published()->latest('updated_at')->with('user')->paginate(20);
+    }
+
+    /**
+     * 获得问题的所有评论和评论的用户信息
+     * @param $id
+     * @return mixed
+     */
     public function getQuestionCommentsById($id)
     {
         $question = Question::with('comments','comments.user')->where('id',$id)->first();

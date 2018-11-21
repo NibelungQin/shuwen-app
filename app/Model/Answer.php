@@ -11,7 +11,7 @@ class Answer extends Model
 
     protected $fillable = ['user_id','question_id','body'];
 
-    public function users()
+    public function user()
     {
         return $this->belongsTo(User::class);
     }

@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Model\Answer;
 use App\Model\Question;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
@@ -64,5 +65,58 @@ class User extends Authenticatable
     public function followed($question)
     {
         return !!$this->follows()->where('question_id',$question)->count();
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function votes()
+    {
+        return $this->belongsToMany(Answer::class,'votes')->withTimestamps();
+    }
+
+    /**
+     * 用户与点赞回答中间表关联
+     * @param $answer
+     * @return array
+     */
+    public function voteFor($answer)
+    {
+        return $this->votes()->toggle($answer);
+    }
+
+    /**
+     * 判断用户是否点赞回答
+     * @param $answer
+     * @return bool
+     */
+    public function hasVotedFor($answer)
+    {
+        return !!$this->votes()->where('answer_id',$answer)->count();
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function followers()
+    {
+        return $this->belongsToMany(self::class,'followers','follower_id','followed_id')->withTimestamps();
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function followersUser()
+    {
+        return $this->belongsToMany(self::class,'followers','followed_id','follower_id')->withTimestamps();
+    }
+
+    /**
+     * @param $user
+     * @return array
+     */
+    public function followThisUser($user)
+    {
+        return $this->followers()->toggle($user);
     }
 }
