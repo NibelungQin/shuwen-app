@@ -26,6 +26,5 @@ Route::resource('questions','QuestionsController',['names'=>[
     'show'   => 'question.show'
 ]]);
 Route::post('questions/{id}/answer','AnswersController@store');
-Route::get('test/{id}','CommentsController@question');
-Route::get('one','CommentsController@test');
+Route::get('notifications','NotificationsController@index');
 

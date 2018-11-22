@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Model\Answer;
+use App\Model\Message;
 use App\Model\Question;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
@@ -118,5 +119,13 @@ class User extends Authenticatable
     public function followThisUser($user)
     {
         return $this->followers()->toggle($user);
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function messages()
+    {
+        return $this->hasMany(Message::class,'to_user_id');
     }
 }
