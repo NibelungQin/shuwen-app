@@ -78,11 +78,11 @@
                             avatar: Shuwen.avatar,
                         },
                         body: response.data.body
-                    }
+                    };
                     this.comments.push(comment);
-                    console.log('comments:' + this.comments)
+                    console.log('comments:' + this.comments);
                     this.body = '';
-                    this.total++
+                    this.count++
                 })
             },
             showCommentsForm() {

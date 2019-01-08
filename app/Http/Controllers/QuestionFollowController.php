@@ -30,21 +30,28 @@ class QuestionFollowController extends Controller
     }
 
     /**
+     * 显示页面用户关注问题的初始状态
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
     public function follower(Request $request)
     {
-        if (Auth::user('api')->followed($request->get('question'))){
+        if (user('api')->followed($request->get('question'))){
             return response()->json(['followed'=>true]);
         }
         return response()->json(['followed'=>false]);
     }
 
+    /**
+     * 用户点击关注问题的按钮
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function followThisQuestion(Request $request)
     {
         $question = $this->questionRepository->byId($request->get('question'));
-        $followed = Auth::user('api')->followThis($question->id);
+        $followed = user('api')->followThis($question->id);
+        //用户已关注该问题
         if (count($followed['detached'])>0){
             $question->decrement('followers_count');
             return response()->json(['followed'=>false]);

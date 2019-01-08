@@ -11,6 +11,7 @@ namespace App\Mailer;
 
 
 use App\User;
+use Illuminate\Support\Facades\Auth;
 
 class UserMailer extends Mailer
 {
@@ -34,6 +35,20 @@ class UserMailer extends Mailer
         $title = '重置密码';
         $data =  [
             'url' => route('password/reset',$token),
+        ];
+        $this->sendTo($template,$email,$title,$data);
+    }
+
+    /**
+     * 用户关注另一个用户发送邮件通知
+     * @param $email
+     */
+    public function followUser($email)
+    {
+        $template = 'emails.followUser';
+        $title = '有人关注了你';
+        $data = [
+            'name' => \user('api')->name,
         ];
         $this->sendTo($template,$email,$title,$data);
     }

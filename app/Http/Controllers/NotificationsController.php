@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Notifications\DatabaseNotification;
 use Illuminate\Support\Facades\Auth;
 
 class NotificationsController extends Controller
@@ -16,8 +17,9 @@ class NotificationsController extends Controller
         return view('notifications.index',compact('user'));
     }
 
-    public function show()
+    public function show(DatabaseNotification $notification)
     {
-        
+        $notification->markAsRead();
+        return redirect(\Illuminate\Support\Facades\Request::query('redirect_url'));
     }
 }

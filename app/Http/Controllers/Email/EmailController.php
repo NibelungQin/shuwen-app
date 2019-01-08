@@ -17,6 +17,11 @@ class EmailController extends Controller
     }
 
 
+    /**
+     * 验证邮箱
+     * @param $token
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
     public function verify($token)
     {
         $user = $this->user->byToken($token);

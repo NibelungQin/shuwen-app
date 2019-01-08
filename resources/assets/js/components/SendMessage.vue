@@ -16,7 +16,7 @@
                     </div>
                     <div class="modal-body">
                         <textarea name="body" class="form-control" v-model="body" v-if="!status"></textarea>
-                        <div class="alert alert-success" v-if="status">
+                        <div class="alert alert-success" v-show="status">
                             <strong>私信发送成功</strong>
                         </div>
                     </div>
@@ -43,18 +43,23 @@
         },
         methods:{
             store(){
-                axios.post('/api/message/store',{'user':this.user,'body':this.body}).then(response=>{
-                    this.status = response.data.status
-                    this.body = ''
+                axios.post('/api/message/store',{
+                    'user':this.user,
+                    'body':this.body
+                })
+                .then(response=>{
+                    this.status = response.data.status;
+                    this.body = '';
                     setTimeout(function () {
-                        $('#modal-send-message').modal('hide')
-                    }, 2000)
+                        $('#modal-send-message').modal('hide');
+                    },2000)
                 })
             },
+
             showSendMessageForm() {
                 $('#modal-send-message').modal('show')
             }
-        }
+        },
     }
 </script>
 

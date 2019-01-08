@@ -32,9 +32,10 @@ class QuestionRepository
     public function normalizeTopic(array $topics)
     {
         return collect($topics)->map(function ($topic){
+            //is_numeric判断是否为数字
            if (is_numeric($topic)){
                Topic::find($topic)->increment('questions_count');
-               return (int)$topic;
+               return intval($topic);
            }
            $newTopic = Topic::create(['name'=>$topic,'questions_count'=>1]);
            return $newTopic->id;
@@ -71,7 +72,7 @@ class QuestionRepository
     }
 
     /**
-     * 获得问题的所有评论和评论的用户信息
+     * 获得该问题的所有评论和评论的用户信息
      * @param $id
      * @return mixed
      */
